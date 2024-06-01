@@ -1,4 +1,4 @@
-# MICA
+# Dual Neural Network for Community Detection
 
 MICA is a clustering tool for single-cell RNA-seq data. MICA takes a preprocessed gene expression matrix as input and
 efficiently cluster the cells.
