@@ -42,13 +42,20 @@ mica -h                                     # Check if mica works correctly
 
 ## 1 Preprocessing File Tree.
 We use 4 dataset as below:
- - Real-world dataset (for test)
- - Synthesized real-world-like dataset (for train)
- - TC1 dataset (for test)
- - Synthesized TC1-like dataset (for train)
+ - `Real-world dataset` (for test)
+ - `Synthesized real-world-like dataset` (for train)
+ - `TC1 dataset` (for test)
+ - `Synthesized TC1-like dataset` (for train)
 
-Each file/folder trees are different from each other.
-therefore, 
+Each file/folder trees are different from each other. \
+
+For example, `real-world dataset` and `TC1 dataset` are saved with nested directory structure.
+`Synthesized real-world-like dataset` and `Synthesized TC1-like dataset` are flat directory structure.
+
+Furthermore, `real-world dataset` named with some text such as dolphin, football and karate.
+`TC1 dataset` named with sequenced indexing.
+
+Thus, we organizing 
 
 
 #### Inputs
