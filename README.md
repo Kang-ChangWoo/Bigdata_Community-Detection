@@ -75,7 +75,7 @@ python N1-organize_dataset.py                      \          #
 
 
 ## 2 Precomputing *peak resolution parameters.
-* peak means best performed resolution parameter according to each graph data.
+\* peak means best performed resolution parameter according to each graph data.
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
