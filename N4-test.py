@@ -17,7 +17,6 @@ from torch_geometric.data import Data
 from torch_geometric.nn import GCNConv, TopKPooling, global_mean_pool
 from torch_geometric.utils import from_networkx
 
-from precompute_peak import *
 from torch.utils.data import DataLoader  
 
 
@@ -303,12 +302,12 @@ def inference(args, model_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='path of test dataset') # path/to/yours
-    #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='path of test dataset') # path/to/yours
-    parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/TC1-all_including-GT', help='path of test dataset') # path/to/yours
+    parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset', help='path of test dataset') # path/to/yours
+    #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/TC1-all_including-GT', help='path of test dataset') # path/to/yours
     parser.add_argument('--device', type=str, default='cuda', help='device')
     parser.add_argument('--model_path', type=str, default='./ckpt/correction-best.pt', help='path to the best model')
     parser.add_argument('--output_file', type=str, default='inference_result.txt', help='path to save the output results')
-    parser.add_argument('--testset', type=str, default='TC1', help='-')
+    parser.add_argument('--testset', type=str, default='real', help='-')
     #parser.add_argument('--pth', type=str, default='basic', help='-')
 
     # Dimension for first MLP (sub)

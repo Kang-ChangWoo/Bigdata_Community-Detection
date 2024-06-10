@@ -6,7 +6,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-#from precompute_peak import *
 
 from utils.utils import load_network, load_ground_truth
 from utils.utils import extract_meta_info, calculate_nmi
