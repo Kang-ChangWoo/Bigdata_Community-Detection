@@ -7,7 +7,7 @@ import argparse
 from evaluation import eval, calculate_nmi, load_ground_truth
 from sklearn.metrics.cluster import normalized_mutual_info_score
 
-import os
+import os, shutil
 import fnmatch
 from tqdm import tqdm
 
@@ -57,34 +57,55 @@ def save_communities_to_file(communities, file_path):
             f.write(str(node) + " " + str(community_id) + "\n")
 
 
-import os
-import shutil
-
-def move_and_rename_dat_files(path):
+# test set = 'real' or 'TC1'
+def move_and_rename_dat_files(path, testset='real'):
     # 최상위 디렉토리의 서브디렉토리 목록 가져오기
-    subdirectories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    subdirectories = [d for d in os.listdir(path) if not d.endswith('.DS_Store')]
+    print(path)
+    print(subdirectories)
 
-    for subdirectory in subdirectories:
-        sub_path = os.path.join(path, subdirectory)
-        # 서브디렉토리 내의 항목 목록 가져오기
-        items = os.listdir(sub_path)
+    if testset == 'real':
+        for subdirectory in subdirectories:
+            sub_path = os.path.join(path, subdirectory)
+            # 서브디렉토리 내의 항목 목록 가져오기
+            items = os.listdir(sub_path)
 
-        for item in items:
-            item_path = os.path.join(sub_path, item)
-            # .dat 파일인 경우 새로운 이름으로 최상위 디렉토리로 이동
-            if item.endswith('.dat'):
-                new_name = f"{subdirectory}-{item}"
-                new_path = os.path.join(path, new_name)
-                shutil.move(item_path, new_path)
-                print(f"Moved {item} to {new_path}")
-        
-        # 서브디렉토리 및 그 안의 모든 파일 삭제
-        shutil.rmtree(sub_path)
-        print(f"Deleted directory {sub_path}")
+            for item in items:
+                item_path = os.path.join(sub_path, item)
+                # .dat 파일인 경우 새로운 이름으로 최상위 디렉토리로 이동
+                if item.endswith('.dat'):
+                    new_name = f"{subdirectory}-{item}"
+                    new_path = os.path.join(path, new_name)
+                    shutil.move(item_path, new_path)
+                    print(f"Moved {item} to {new_path}")
+            
+            # 서브디렉토리 및 그 안의 모든 파일 삭제
+            shutil.rmtree(sub_path)
+            print(f"Deleted directory {sub_path}")
+
+
+    elif testset == 'TC1':
+        for subdirectory in subdirectories:
+            sub_path = os.path.join(path, subdirectory)
+            # 서브디렉토리 내의 항목 목록 가져오기
+            items = os.listdir(sub_path)
+
+            for item in items:
+                item_path = os.path.join(sub_path, item)
+                # .dat 파일인 경우 새로운 이름으로 최상위 디렉토리로 이동
+                if item.endswith('.dat'):
+                    new_name = f"{item}"
+                    new_path = os.path.join(path, new_name)
+                    shutil.move(item_path, new_path)
+                    print(f"Moved {item} to {new_path}")
+            
+            # 서브디렉토리 및 그 안의 모든 파일 삭제
+            shutil.rmtree(sub_path)
+            print(f"Deleted directory {sub_path}")
 
 def main(args):
     if args.isit_hierarchy == 1:
-        move_and_rename_dat_files(args.dataset_path)
+        move_and_rename_dat_files(args.dataset_path, args.testset)
 
 
 
@@ -144,7 +165,8 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--dataset_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/data/test/real-world_dataset', help='-')
-    parser.add_argument('--isit_hierarchy', type=int, default=0, help='-')
+    parser.add_argument('--dataset_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='-')
+    parser.add_argument('--isit_hierarchy', type=int, default=1, help='-')
+    parser.add_argument('--testset', type=str, default='TC1', help='-')
     args = parser.parse_args()
     main(args)
