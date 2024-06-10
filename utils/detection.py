@@ -1,6 +1,7 @@
 import networkx as nx
 import igraph as ig # TODO=it can be replaced with network x?
 import leidenalg
+import community as community_louvain
 
 def detect_communities_leiden(G, resolution=1.0):
     node_id_map = {node: idx for idx, node in enumerate(G.nodes())}
@@ -11,7 +12,7 @@ def detect_communities_leiden(G, resolution=1.0):
     return communities
 
 def detect_communities_louvain(G, resolution=1.0):
-    partition = community_louvain.best_partition(G, resolution=resolution_)
+    partition = community_louvain.best_partition(G, resolution=resolution)
     community_to_nodes = {}
     for node, community in partition.items():
         if community not in community_to_nodes:

@@ -306,7 +306,7 @@ if __name__ == "__main__":
     #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='path of test dataset') # path/to/yours
     parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/TC1-all_including-GT', help='path of test dataset') # path/to/yours
     parser.add_argument('--device', type=str, default='cuda', help='device')
-    parser.add_argument('--model_path', type=str, default='./correction-best.pt', help='path to the best model')
+    parser.add_argument('--model_path', type=str, default='./ckpt/correction-best.pt', help='path to the best model')
     parser.add_argument('--output_file', type=str, default='inference_result.txt', help='path to save the output results')
     parser.add_argument('--testset', type=str, default='TC1', help='-')
     #parser.add_argument('--pth', type=str, default='basic', help='-')

@@ -107,9 +107,9 @@ def train(args):
         
         if eval_performance > best_performance:
             best_performance = eval_performance
-            torch.save(model, f'./{args.pth}-best.pt')
+            torch.save(model, f'./ckpt/{args.pth}-best.pt')
 
-    torch.save(model, f'./{args.pth}-last.pt')
+    torch.save(model, f'./ckpt/{args.pth}-last.pt')
 
 if __name__ == "__main__":
     # device = 'cuda' if torch.cuda.is_available() else 'cpu'
