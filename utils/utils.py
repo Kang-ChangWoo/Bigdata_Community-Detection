@@ -84,3 +84,23 @@ def calculate_nmi(true_communities, detected_communities):
     detected_labels_vector = [detected_labels.get(node, -1) for node in nodes]
 
     return normalized_mutual_info_score(true_labels_vector, detected_labels_vector)
+
+
+# Input: communities(list?) / file path
+# Output: saved community
+# Used in: save computed communities
+def save_communities_to_file(communities, file_path):
+    # Convert the list of lists into a dictionary with community as key and nodes as values
+    community_dict = {}
+    for community_id, nodes in enumerate(communities):
+        for node in nodes:
+            community_dict[node] = community_id
+
+    # Sort the dictionary by community key (which are the node numbers here)
+    sorted_community_items = sorted(community_dict.items())
+
+    # Write to file, now ensuring nodes are listed in the sorted order of their community keys
+    with open(file_path, 'w') as f:
+        for node, community_id in sorted_community_items:
+            #f.write(f"{node} {community_id}\n")
+            f.write(str(node) + " " + str(community_id) + "\n")

@@ -10,7 +10,7 @@ def detect_communities_leiden(G, resolution=1.0):
     communities = [list(g.vs[part]['name']) for part in partition]
     return communities
 
-def detect_communities_louvain(G, resolution_ = 1.0):
+def detect_communities_louvain(G, resolution=1.0):
     partition = community_louvain.best_partition(G, resolution=resolution_)
     community_to_nodes = {}
     for node, community in partition.items():
