@@ -47,15 +47,15 @@ We use 4 dataset as below:
  - `TC1 dataset` (for test)
  - `Synthesized TC1-like dataset` (for train)
 
-Each file/folder trees are different from each other. \
+Each file and folder structure is unique.
 
-For example, `real-world dataset` and `TC1 dataset` are saved with nested directory structure.
-`Synthesized real-world-like dataset` and `Synthesized TC1-like dataset` are flat directory structure.
+For example, the `real-world dataset` and the `TC1 dataset` are saved using a nested directory structure. 
+In contrast, the `synthesized real-world-like dataset` and the `synthesized TC1-like dataset` use a flat directory structure.
 
-Furthermore, `real-world dataset` named with some text such as dolphin, football and karate.
-`TC1 dataset` named with sequenced indexing.
+Additionally, the `real-world dataset` files are named with descriptive text, such as "dolphin," "football," and "karate." 
+On the other hand, the `TC1 dataset` files are named using sequential indexing.
 
-Thus, we organizing 
+Therefore, we are organizing
 
 
 #### Inputs
