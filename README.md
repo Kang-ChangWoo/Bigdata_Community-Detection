@@ -13,12 +13,11 @@ MICA workflow:
 <img src="images/MICA_workflow.png" width="500">
 
 
-## Prerequisites
-* [python>=3.7.6, <=3.9.2](https://www.python.org/downloads/) (developed and tested on python 3.7.6, tested on python3.9.2)
-    * See [requirements.txt](https://github.com/jyyulab/MICA/blob/million/requirements.txt) file for other dependencies
+## Enviroment setup
+- Python 3.9.19
+- Cuda compiler 11.2
 
-
-## Installation
+### Installation
 #### Using conda to create a virtual environment 
 ##### (Not available until this line is removed)
 The recommended method of setting up the required Python environment and dependencies 
