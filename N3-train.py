@@ -18,6 +18,7 @@ def validate(net, test_loader):
     data_iter = len(test_loader)
 
     test_nmi_score = 0.0
+    eval_loss = 0.0
 
     with torch.no_grad():
         for i, (test_G, test_torch_G, test_community_label, peak_resolution) in enumerate(test_loader, 0):

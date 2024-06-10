@@ -20,43 +20,12 @@ from torch_geometric.utils import from_networkx
 from torch.utils.data import DataLoader  
 
 
+from utils.utils import load_network, load_ground_truth
+from utils.utils import extract_meta_info, calculate_nmi
+from utils.dataloader import train_graph_loader, test_graph_loader
+from utils.detection import detect_communities_louvain, detect_communities_leiden
+from utils.network import mainnet_ResolNet
 
-
-
-"""
-2. Community detection algorithm.
-"""
-def detect_communities_leiden(G, resolution=1.0):
-    node_id_map = {node: idx for idx, node in enumerate(G.nodes())}
-    g = ig.Graph(edges=[(node_id_map[u], node_id_map[v]) for u, v in G.edges()], directed=False)
-    g.vs["name"] = list(G.nodes())
-    partition = leidenalg.find_partition(g, leidenalg.RBConfigurationVertexPartition, resolution_parameter=resolution)
-    communities = [list(g.vs[part]['name']) for part in partition]
-    return communities
-
-def detect_communities_louvain(G, resolution_ = 1.0):
-    partition = community_louvain.best_partition(G, resolution=resolution_)
-    community_to_nodes = {}
-    for node, community in partition.items():
-        if community not in community_to_nodes:
-            community_to_nodes[community] = []
-        community_to_nodes[community].append(node)
-    return list(community_to_nodes.values())
-
-
-def load_network(train_path):
-    G = nx.Graph()
-    with open(train_path, 'r') as f:
-        for line in f:
-            parts = line.strip().split()
-            if len(parts) == 2:
-                G.add_edge(int(parts[0]), int(parts[1]))
-    return G
-
-def load_community_labels(file_path):
-    with open(file_path, 'r') as f:
-        communities = [int(line.strip()) for line in f]
-    return communities
 
 
 
@@ -157,106 +126,6 @@ class test_graph_loader(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.test_graphs)
 
-class subnet_MLP(nn.Module):
-    def __init__(self, args):
-        super(subnet_MLP, self).__init__()
-
-        self.linear1 = nn.Linear(args.sMLP_idim, args.sMLP_hdim1)
-        self.linear2 = nn.Linear(args.sMLP_hdim1, args.sMLP_hdim2)
-        self.output = nn.Linear(args.sMLP_hdim2, args.sMLP_odim)
-        
-        self.leaky_relu = nn.LeakyReLU(0.1, inplace=True)
-        self.batch_norm1 = nn.BatchNorm1d(args.sMLP_hdim1)
-        self.batch_norm2 = nn.BatchNorm1d(args.sMLP_hdim2)
-    
-    def forward(self, x):
-        x = self.linear1(x)
-        x = self.leaky_relu(x)
-        #x = self.batch_norm1(x)
-
-        x = self.linear2(x)
-        x = self.leaky_relu(x)
-        #x = self.batch_norm2(x)
-
-        x = self.output(x)
-        return x 
-
-class subnet_GCN(nn.Module):
-    def __init__(self, args):
-        super(subnet_GCN, self).__init__()
-        self.conv1 = GCNConv(1, args.GCN_hdim1)  
-        self.conv2 = GCNConv(args.GCN_hdim1, args.GCN_hdim2)
-        self.conv3 = GCNConv(args.GCN_hdim2, args.GCN_odim)
-        self.leaky_relu = nn.LeakyReLU(0.1, inplace=True)
-
-    # , batch
-    def forward(self, x, edge_index):
-        x = self.conv1(x, edge_index)
-        x = self.leaky_relu(x)
-        x = self.conv2(x, edge_index)
-        x = self.leaky_relu(x)
-        x = self.conv3(x, edge_index)
-        #x = self.leaky_relu(x)
-
-        #x = global_mean_pool(x, 1) # , batch
-
-        x = torch.mean(x, dim=0)
-
-        return x
-        
-class finnet_MLP(nn.Module):
-    def __init__(self, args):
-        super(finnet_MLP, self).__init__()
-
-        self.linear1 = nn.Linear(args.fMLP_idim, args.fMLP_hdim1)
-        self.linear2 = nn.Linear(args.fMLP_hdim1, args.fMLP_hdim2)
-        self.output = nn.Linear(args.fMLP_hdim2, args.fMLP_odim)
-        
-        self.leaky_relu = nn.LeakyReLU(0.1, inplace=True)
-        self.batch_norm1 = nn.BatchNorm1d(args.fMLP_hdim1)
-        self.batch_norm2 = nn.BatchNorm1d(args.fMLP_hdim2)
-
-        self.sigmoid = nn.Sigmoid()
-    
-    def forward(self, x):
-        x = self.linear1(x)
-        x = self.leaky_relu(x)
-        #x = self.batch_norm1(x)
-
-        x = self.linear2(x)
-        x = self.leaky_relu(x)
-        #x = self.batch_norm2(x)
-
-        x = self.output(x)
-        x = self.sigmoid(x)
-        return x 
-
-
-class mainnet_ResolNet(nn.Module):
-    def __init__(self, args):
-        super(mainnet_ResolNet, self).__init__()
-        self.args = args
-
-        self.sub_MLP = subnet_MLP(self.args).to(args.device) 
-        self.sub_GCN = subnet_GCN(self.args).to(args.device)
-
-        self.fin_MLP = finnet_MLP(self.args).to(args.device)
-
-    def forward(self, G, torch_G):
-        meta_info = extract_meta_info(G, self.device)
-        out1 = self.sub_MLP(meta_info) #10d vector
-        out1 = out1.squeeze()
-
-        #graph_info = torch_G
-        x = torch_G.x.to(self.args.device)
-        edge_index = torch_G.edge_index.to(self.args.device)
-        #batch = torch_G.batch.to(self.args.device)
-        out2 = self.sub_GCN(x, edge_index) #10d vector , batch
-
-        out3 = self.fin_MLP(torch.cat((out1, out2), dim=0))
-        return out3
-
-
 
 def inference(args, model_path):
     # Load the model
@@ -283,7 +152,7 @@ def inference(args, model_path):
             out = min_value + range_value * out
 
             out_new = out.item()
-            predicted_community = detect_communities_louvain(test_G, resolution_=out_new)
+            predicted_community = detect_communities_leiden(test_G, resolution=out_new)
 
             true_communities = load_ground_truth(test_community_label)
             #original_nmi_score = calculate_nmi(true_communities, predicted_community)
@@ -294,6 +163,8 @@ def inference(args, model_path):
 
             results.append((data_name, nmi_score, out_new))
             print(f'NMI score for {data_name}: {nmi_score:.8f} {out_new:.8f}')
+            print(f'{test_community_label}')
+            print('')
 
     print(results)
     return results
@@ -305,7 +176,7 @@ if __name__ == "__main__":
     parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset', help='path of test dataset') # path/to/yours
     #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/TC1-all_including-GT', help='path of test dataset') # path/to/yours
     parser.add_argument('--device', type=str, default='cuda', help='device')
-    parser.add_argument('--model_path', type=str, default='./ckpt/correction-best.pt', help='path to the best model')
+    parser.add_argument('--model_path', type=str, default='./ckpt/correction-last.pt', help='path to the best model')
     parser.add_argument('--output_file', type=str, default='inference_result.txt', help='path to save the output results')
     parser.add_argument('--testset', type=str, default='real', help='-')
     #parser.add_argument('--pth', type=str, default='basic', help='-')
