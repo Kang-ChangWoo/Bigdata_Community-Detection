@@ -40,7 +40,7 @@ mica -h                                     # Check if mica works correctly
 ```
 
 
-## 1 Preprocessing File Tree.
+## 1 Reorganizing file/folder structure.
 We use 4 dataset as below:
  - `Real-world dataset` (for test)
  - `Synthesized real-world-like dataset` (for train)
@@ -74,6 +74,8 @@ python N1-organize_dataset.py                      \          #
 ```
 
 
+## 2 Precomputing *peak resolution parameters.
+* peak means best performed resolution parameter according to each graph data.
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
