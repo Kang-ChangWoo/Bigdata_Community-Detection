@@ -10,7 +10,7 @@ Our Github repository consists of the following steps:
 4. Training proposed network.
 5. 5 Testing proposed network.
 
-<img src="fig/overview.pig" width="500">
+<img src="fig/overview.png" width="500">
 
 
 ## 1 Setup the enviroment
