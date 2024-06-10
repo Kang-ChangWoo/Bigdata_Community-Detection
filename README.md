@@ -57,6 +57,21 @@ On the other hand, the `TC1 dataset` files are named using sequential indexing.
 
 Therefore, we are organizing
 
+```
+python N1-organize_dataset.py   \          # 
+  --dataset_path 'path/to/your' \          # 
+  --isit_hierarchy 0            \          #
+  --testset TC1                            #
+```
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--dataset_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='-')
+    parser.add_argument('--isit_hierarchy', type=int, default=1, help='-')
+    parser.add_argument('--testset', type=str, default='TC1', help='-')
+    args = parser.parse_args()
+    main(args)
+
 
 #### Inputs
 The main input for MICA is tab-separated cells/samples by genes/proteins (rows are cells/samples) expression 
