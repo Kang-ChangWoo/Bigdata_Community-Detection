@@ -13,7 +13,7 @@ MICA workflow:
 <img src="images/MICA_workflow.png" width="500">
 
 
-## Enviroment setup
+## 1 Setup the enviroment
 - Python 3.9.19
 - Cuda compiler 11.2
 
