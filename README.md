@@ -77,6 +77,32 @@ python N1-organize_dataset.py                      \          #
 ## 2 Precomputing *peak resolution parameters.
 \* peak means best performed resolution parameter according to each graph data.
 
+
+
+
+
+
+
+## 3 Training proposed network.
+we mainly train on synthesized dataset, and then we test/eval on given dataset.
+
+For `real-world dataset`, we type below:
+```
+python N3-train.py                                                  \          # 
+  --train_path 'path/to/your/`synthesized real-world-like dataset`  \          # 
+  --test_path 'path/to/your/`real-world_dataset`                    \          #
+  --testset real                                                    \          #
+```
+
+For `TC1 dataset`, we type below: 
+```
+python N3-train.py                                                  \          # 
+  --train_path 'path/to/your/`synthesized TC1-like dataset`         \          # 
+  --test_path 'path/to/your/`TC1 dataset`                           \          #
+  --testset TC1                                                     \          #
+```
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--dataset_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='-')
