@@ -18,14 +18,14 @@ Our Github repository consists of the following steps:
 - Python 3.9.19
 - Cuda compiler 11.2
 
-### Install from conda
+### Install from conda (TBD)
 ```
 conda create -n mica100 python=3.9.2        # Create a python virtual environment
 source activate mica100                     # Activate the virtual environment
 pip install MICA                            # Install MICA and its dependencies
 ```
 
-### Install from pip
+### Install from pip (TBD)
 ```
 conda create -n mica100 python=3.9.2        # Create a python virtual environment
 source activate mica100                     # Activate the virtual environment
