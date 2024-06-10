@@ -40,28 +40,16 @@ mica -h                                     # Check if mica works correctly
 ```
 
 
-## Usage
-MICA workflow has two built-in dimension reduction methods. The auto mode (```mica``` or ```mica auto```) 
-selects a dimension reduction method automatically based on the cell count of the preprocessed matrix. 
-Users can select graph embedding method (```mica ge```)  or MDS (```mica mds```) or Louvain (```mica louvain```) method manually using the subcommand 
-```ge``` or ```mds``` or ```louvain``` respectively. 
-```
-$ mica -h
-usage: mica [-h] {auto,ge,mds} ...
+## 1 Preprocessing File Tree.
+We use 4 dataset as below:
+ - Real-world dataset (for test)
+ - Synthesized real-world-like dataset (for train)
+ - TC1 dataset (for test)
+ - Synthesized TC1-like dataset (for train)
 
-MICA - Mutual Information-based Clustering Analysis tool.
+Each file/folder trees are different from each other.
+therefore, 
 
-optional arguments:
-  -h, --help     show this help message and exit
-
-subcommands:
-  {auto,ge,mds}  versions
-    auto         automatic version
-    ge           graph embedding version
-    mds          MDS version
-    louvain      simple louvain version
-```
-Use ```mica ge -h```, ```mica mds -h```, and ```mica louvain -h``` to check helps with subcommands.
 
 #### Inputs
 The main input for MICA is tab-separated cells/samples by genes/proteins (rows are cells/samples) expression 
