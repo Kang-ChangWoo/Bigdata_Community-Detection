@@ -75,9 +75,23 @@ python N1-organize_dataset.py                        \          #
 ## 2 Precomputing *peak resolution parameters.
 \* peak means best performed resolution parameter according to each graph data.
 
+Before train our network model, we have to get optimal resolution parameters according to each graph structures.
+In this process, we can get each optimal parameters by measuring nmi scores iteratively.
 
+For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
+```
+python N1-organize_dataset.py                        \          # 
+  --dataset_path 'path/to/your/`real-world_dataset`' \          # 
+  --root_path 'path/to/your/`real-world_dataset`'    \          #
+  --testset real                                                #
 
+** : if our path is './root/proj/data/train/', dataset_path would be 'train' and root_path would be './root/proj/data/'
 
+python N1-organize_dataset.py                        \          # 
+  --dataset_path 'path/to/your/`TC1-dataset`'        \          # 
+  --root_path 'path/to/your/`TC1_dataset`'           \          #
+  --testset TC1                                                 #
+```
 
 
 
