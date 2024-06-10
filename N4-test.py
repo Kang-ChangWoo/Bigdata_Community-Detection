@@ -179,7 +179,7 @@ if __name__ == "__main__":
     parser.add_argument('--model_path', type=str, default='./ckpt/correction-last.pt', help='path to the best model')
     parser.add_argument('--output_file', type=str, default='vis/inference_result.txt', help='path to save the output results')
     parser.add_argument('--testset', type=str, default='real', help='-')
-    #parser.add_argument('--pth', type=str, default='basic', help='-')
+    parser.add_argument('--ablation', type=str, default='full', help='-')
 
     # Dimension for first MLP (sub)
     parser.add_argument('--sMLP_idim', type=int, default=7, help='dimension of input tensor') 

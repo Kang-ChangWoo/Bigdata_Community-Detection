@@ -125,6 +125,7 @@ if __name__ == "__main__":
     parser.add_argument('--seed', type=int, default=0, help='random seed')
     parser.add_argument('--device', type=str, default='cuda', help='device')
     parser.add_argument('--pth', type=str, default='correction', help='-')
+    parser.add_argument('--ablation', type=str, default='full', help='-')    
 
     # Dimension for first MLP (sub)
     parser.add_argument('--sMLP_idim', type=int, default=7, help='dimension of input tensor') 
