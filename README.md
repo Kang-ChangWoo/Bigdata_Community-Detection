@@ -84,7 +84,7 @@ python N1-organize_dataset.py                      \          #
 
 
 ## 3 Training proposed network.
-
+we mainly train on synthesized dataset, and then we test/eval on given dataset.
 
 For `real-world dataset`, we type below:
 ```
@@ -93,13 +93,6 @@ python N3-train.py                                                  \          #
   --test_path 'path/to/your/`real-world_dataset`                    \          #
   --testset real                                                    \          #
 ```
-
-
-CUDA_VISIBLE_DEVICES=2 python N3-train.py \
-  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset" \
-  --test_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset" \
-  --testset real
-
 
 For `TC1 dataset`, we type below: 
 ```
