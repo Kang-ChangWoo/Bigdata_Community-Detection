@@ -55,14 +55,25 @@ In contrast, the `synthesized real-world-like dataset` and the `synthesized TC1-
 Additionally, the `real-world dataset` files are named with descriptive text, such as "dolphin," "football," and "karate." 
 On the other hand, the `TC1 dataset` files are named using sequential indexing.
 
-Therefore, we are organizing
+Therefore, we have to re-organize given dataset structures.
 
+For `real-world dataset`, we type below:
 ```
-python N1-organize_dataset.py   \          # 
-  --dataset_path 'path/to/your' \          # 
-  --isit_hierarchy 0            \          #
-  --testset TC1                            #
+python N1-organize_dataset.py                      \          # 
+  --dataset_path 'path/to/your/real-world_dataset' \          # 
+  --isit_hierarchy 1                               \          #
+  --testset real                                              #
 ```
+
+For `TC1 dataset`, we type below: 
+```
+python N1-organize_dataset.py                      \          # 
+  --dataset_path 'path/to/your/TC1-dataset'        \          # 
+  --isit_hierarchy 1                               \          #
+  --testset TC1                                               #
+```
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
