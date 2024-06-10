@@ -1,34 +1,31 @@
 # Dual Neural Network for Community Detection
 
-MICA is a clustering tool for single-cell RNA-seq data. MICA takes a preprocessed gene expression matrix as input and
-efficiently cluster the cells.
-MICA consists of the following main components:
-1. Mutual information estimation for cell-cell distance quantification
-2. Dimension reduction on the non-linear mutual information-based distance space
-3. Consensus clustering on dimension-reduced spaces
-4. Clustering visualization and cell type annotation
+Our method enhances community detection performance by estimating optimal resolution parameters based on graph structures.
+By utilizing the power of neural networks, we can get optimal resolution parameters.
 
-MICA workflow:
+Our Github repository consists of the following steps:
+1. Setup the enviroment.
+2. Reorganizing file/folder structure.
+3. Precomputing *peak resolution parameters.
+4. Training proposed network.
+5. 5 Testing proposed network.
 
-<img src="images/MICA_workflow.png" width="500">
+<img src="fig/workflow.png" width="500">
 
 
 ## 1 Setup the enviroment
+### Environments
 - Python 3.9.19
 - Cuda compiler 11.2
 
-### Installation
-#### Using conda to create a virtual environment 
-##### (Not available until this line is removed)
-The recommended method of setting up the required Python environment and dependencies 
-is to use the [conda](https://conda.io/docs/) dependency manager:
+### Install from conda
 ```
 conda create -n mica100 python=3.9.2        # Create a python virtual environment
 source activate mica100                     # Activate the virtual environment
 pip install MICA                            # Install MICA and its dependencies
 ```
 
-#### Install from source
+### Install from pip
 ```
 conda create -n mica100 python=3.9.2        # Create a python virtual environment
 source activate mica100                     # Activate the virtual environment
@@ -39,7 +36,7 @@ mica -h                                     # Check if mica works correctly
 ```
 
 
-## 1 Reorganizing file/folder structure.
+## 2 Reorganizing file/folder structure.
 We use 4 dataset as below:
  - `Real-world dataset` (for test)
  - `Synthesized real-world-like dataset` (for train)
@@ -71,7 +68,7 @@ python N1-organize_dataset.py                        \          #
 ```
 
 
-## 2 Precomputing *peak resolution parameters.
+## 3 Precomputing *peak resolution parameters.
 \* peak means best performed resolution parameter according to each graph data.
 
 Before train our network model, we have to get optimal resolution parameters according to each graph structures.
@@ -94,7 +91,7 @@ python N1-organize_dataset.py                        \          #
 
 
 
-## 3 Training proposed network.
+## 4 Training proposed network.
 we mainly train on synthesized dataset, and then we test/eval on given dataset.
 
 For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
@@ -115,7 +112,7 @@ python N3-train.py                                                  \          #
 
 
 
-## 4 Testing proposed network.
+## 5 Testing proposed network.
 For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
 ```
 python N4-test.py                                                  \          # 
