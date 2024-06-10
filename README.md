@@ -57,20 +57,18 @@ On the other hand, the `TC1 dataset` files are named using sequential indexing.
 
 Therefore, we have to re-organize given dataset structures.
 
-For `real-world dataset`, we type below:
+For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
 ```
-python N1-organize_dataset.py                      \          # 
-  --dataset_path 'path/to/your/real-world_dataset' \          # 
-  --isit_hierarchy 1                               \          #
-  --testset real                                              #
-```
+python N1-organize_dataset.py                        \          # 
+  --dataset_path 'path/to/your/`real-world_dataset`' \          # 
+  --isit_hierarchy 1                                 \          #
+  --testset real                                                #
 
-For `TC1 dataset`, we type below: 
-```
-python N1-organize_dataset.py                      \          # 
-  --dataset_path 'path/to/your/TC1-dataset'        \          # 
-  --isit_hierarchy 1                               \          #
-  --testset TC1                                               #
+
+python N1-organize_dataset.py                        \          # 
+  --dataset_path 'path/to/your/`TC1-dataset`'        \          # 
+  --isit_hierarchy 1                                 \          #
+  --testset TC1                                                 #
 ```
 
 
@@ -86,20 +84,37 @@ python N1-organize_dataset.py                      \          #
 ## 3 Training proposed network.
 we mainly train on synthesized dataset, and then we test/eval on given dataset.
 
-For `real-world dataset`, we type below:
+For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
 ```
 python N3-train.py                                                  \          # 
-  --train_path 'path/to/your/`synthesized real-world-like dataset`  \          # 
-  --test_path 'path/to/your/`real-world_dataset`                    \          #
+  --train_path 'path/to/your/`synthesized real-world-like dataset`' \          # 
+  --test_path 'path/to/your/`real-world_dataset`'                   \          #
   --testset real                                                    \          #
+  --pth real                                                                   #
+
+
+python N3-train.py                                                  \          # 
+  --train_path 'path/to/your/`synthesized TC1-like dataset`'        \          # 
+  --test_path 'path/to/your/`TC1 dataset`'                          \          #
+  --testset TC1                                                     \          #
+  --pth TC1                                                                    #
 ```
 
-For `TC1 dataset`, we type below: 
+
+
+## 4 Testing proposed network.
+For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
 ```
-python N3-train.py                                                  \          # 
-  --train_path 'path/to/your/`synthesized TC1-like dataset`         \          # 
-  --test_path 'path/to/your/`TC1 dataset`                           \          #
-  --testset TC1                                                     \          #
+python N4-test.py                                                  \          # 
+  --test_path 'path/to/your/`real-world_dataset`'                  \          #
+  --model_path 'path/to/your/model_checkpoints'                    \          # 
+  --testset real                                                   \          #
+
+
+python N4-test.py                                                  \          # 
+  --test_path 'path/to/your/`TC1 dataset`'                         \          #
+  --model_path 'path/to/your/model_checkpoints'                    \          # 
+  --testset TC1                                                    \          #
 ```
 
 
