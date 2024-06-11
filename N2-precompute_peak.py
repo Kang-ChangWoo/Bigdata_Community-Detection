@@ -4,12 +4,13 @@ import networkx as nx
 import community as community_louvain
 import numpy as np
 
-from evaluation import eval, calculate_nmi, load_ground_truth
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from natsort import natsorted
 from tqdm import tqdm
 
-from utils.utils import load_network, save_communities_to_file
+from utils.utils import load_network, save_communities_to_file, load_ground_truth
+from utils.utils import extract_meta_info, calculate_nmi, evaluate_nmi
+
 from utils.detection import detect_communities_louvain, detect_communities_leiden
 
 def main(args):

@@ -104,3 +104,14 @@ def save_communities_to_file(communities, file_path):
         for node, community_id in sorted_community_items:
             #f.write(f"{node} {community_id}\n")
             f.write(str(node) + " " + str(community_id) + "\n")
+
+
+def evaluate_nmi(network_file_path):
+    # Replace or append file extensions as necessary to construct paths
+    community_file_path = network_file_path.replace('.dat', '.cmty')
+    ground_truth_file_path = network_file_path.replace('.dat', '-c.dat')
+
+    detected_communities = load_ground_truth(community_file_path)
+    true_communities = load_ground_truth(ground_truth_file_path)
+    nmi_score = calculate_nmi(true_communities, detected_communities)
+    return nmi_score

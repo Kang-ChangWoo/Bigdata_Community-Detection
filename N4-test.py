@@ -14,7 +14,7 @@ import leidenalg
 
 
 from torch_geometric.data import Data
-from torch_geometric.nn import GCNConv, TopKPooling, global_mean_pool
+from torch_geometric.nn import GCNConv
 from torch_geometric.utils import from_networkx
 
 from torch.utils.data import DataLoader  

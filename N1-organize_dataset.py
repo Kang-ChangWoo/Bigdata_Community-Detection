@@ -4,8 +4,9 @@ import random
 import numpy as np
 import argparse
 
-from evaluation import eval, calculate_nmi, load_ground_truth
 from sklearn.metrics.cluster import normalized_mutual_info_score
+from utils.utils import load_network, load_ground_truth
+from utils.utils import extract_meta_info, calculate_nmi, evaluate_nmi
 
 import os, shutil
 import fnmatch
