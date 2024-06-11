@@ -11,7 +11,7 @@ from utils.utils import load_network, load_ground_truth
 from utils.utils import extract_meta_info, calculate_nmi
 from utils.dataloader import train_graph_loader, test_graph_loader
 from utils.detection import detect_communities_louvain, detect_communities_leiden
-from utils.network import mainnet_ResolNet
+from utils.network import mainnet_ResolNet, onlyMLP_ResolNet, onlyGCN_ResolNet
 
 def validate(net, test_loader):
     criterion = nn.MSELoss()
@@ -49,7 +49,6 @@ def validate(net, test_loader):
     return eval_loss
 
 
-
 def train(args):
     # seed fixed
     torch.manual_seed(args.seed)
@@ -58,7 +57,19 @@ def train(args):
     train_loader = train_graph_loader(args.train_path, args.device)
     test_loader = test_graph_loader(args.test_path, args.testset, args.device)
     
-    model = mainnet_ResolNet(args).to(args.device)
+    if args.ablation == 'full_model':
+        print("Full model")
+        model = mainnet_ResolNet(args).to(args.device)
+
+    elif args.ablation == 'only_MLP':
+        print("Only MLP")
+        model = onlyMLP_ResolNet(args).to(args.device)
+    
+    elif args.ablation == 'only_GCN':
+        print("Only GCN")
+        model = onlyGCN_ResolNet(args).to(args.device)
+
+    #model = mainnet_ResolNet(args).to(args.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999), weight_decay=0.01)
     criterion = nn.MSELoss()
@@ -80,7 +91,7 @@ def train(args):
             min_value = nn.Parameter(torch.tensor([000.1])).to(args.device)
             range_value = nn.Parameter(torch.tensor([50.0])).to(args.device)
             out = min_value + range_value * out 
-            print(out)
+            print(out, peak_resolution.item())
     
             """
             # For training efficiency, we deprecate nmi loss

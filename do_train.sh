@@ -23,26 +23,25 @@
 #   --GCN_odim 20 \
 #   --pth TC1_only_gcn
 
-
-# CUDA_VISIBLE_DEVICES=3 python N3-train.py \
-#   --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset" \
-#   --test_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset" \
-#   --testset real \
-#   --pth real
-
-
 CUDA_VISIBLE_DEVICES=3 python N3-train.py \
-  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset" \
+  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset_v2" \
   --test_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset" \
   --testset real \
-  --ablation only_mlp \
+  --pth real_Full_model \
+  --ablation full_model \
+
+CUDA_VISIBLE_DEVICES=3 python N3-train.py \
+  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset_v2" \
+  --test_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset" \
+  --testset real \
+  --ablation only_MLP \
   --sMLP_odim 20 \
-  --pth real_only_mlp
+  --pth real_only_MLP
 
 CUDA_VISIBLE_DEVICES=3 python N3-train.py \
-  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset" \
+  --train_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/real_trainset_v2" \
   --test_path "/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset" \
   --testset real \
-  --ablation only_gcn \
+  --ablation only_GCN \
   --GCN_odim 20 \
-  --pth real_only_gcn
+  --pth real_only_GCN

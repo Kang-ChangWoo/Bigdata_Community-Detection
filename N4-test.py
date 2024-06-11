@@ -24,7 +24,7 @@ from utils.utils import load_network, load_ground_truth
 from utils.utils import extract_meta_info, calculate_nmi
 from utils.dataloader import train_graph_loader, test_graph_loader
 from utils.detection import detect_communities_louvain, detect_communities_leiden
-from utils.network import mainnet_ResolNet
+from utils.network import mainnet_ResolNet, onlyMLP_ResolNet, onlyGCN_ResolNet
 
 
 
@@ -78,10 +78,6 @@ class graph_loader(torch.utils.data.Dataset):
 
 class test_graph_loader(torch.utils.data.Dataset):
     def __init__(self, args, test_path):
-
-        ############ for test  ####################
-        # 저장구조 형태 변경 필요
-        
         self.test_path = test_path
         self.args = args
 
@@ -129,9 +125,20 @@ class test_graph_loader(torch.utils.data.Dataset):
 
 def inference(args, model_path):
     # Load the model
-    model = mainnet_ResolNet(args).to(args.device)
+    if args.ablation == 'full_model':
+        print("Full model")
+        model = mainnet_ResolNet(args).to(args.device)
+
+    elif args.ablation == 'only_MLP':
+        print("Only MLP")
+        model = onlyMLP_ResolNet(args).to(args.device)
+    
+    elif args.ablation == 'only_GCN':
+        print("Only GCN")
+        model = onlyGCN_ResolNet(args).to(args.device)
+
     model = torch.load(model_path)
-    #model.load_state_dict(torch.load(model_path))
+    # model.load_state_dict(model_path1)
     model.eval()
 
     # Prepare the test dataset
@@ -172,14 +179,12 @@ def inference(args, model_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='path of test dataset') # path/to/yours
-    parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/real-world_dataset', help='path of test dataset') # path/to/yours
-    #parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/train/TC1-all_including-GT', help='path of test dataset') # path/to/yours
+    parser.add_argument('--test_path', type=str, default='/root/storage/implementation/Lecture-BDB_proj/Bigdata_Community-Detection/data/test/TC1-all_including-GT', help='path of test dataset') # path/to/yours
     parser.add_argument('--device', type=str, default='cuda', help='device')
-    parser.add_argument('--model_path', type=str, default='./ckpt/correction-last.pt', help='path to the best model')
+    parser.add_argument('--model_path', type=str, default='./ckpt/TC1-best.pt', help='path to the best model')
     parser.add_argument('--output_file', type=str, default='vis/inference_result.txt', help='path to save the output results')
     parser.add_argument('--testset', type=str, default='real', help='-')
-    parser.add_argument('--ablation', type=str, default='full', help='-')
+    parser.add_argument('--ablation', type=str, default='full_model', help='-')
 
     # Dimension for first MLP (sub)
     parser.add_argument('--sMLP_idim', type=int, default=7, help='dimension of input tensor') 
