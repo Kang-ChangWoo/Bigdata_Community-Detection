@@ -18,13 +18,13 @@ Our Github repository consists of the following steps:
 - Python 3.9.19
 - Cuda compiler 11.2
 
-### Install from conda (TBD)
+### Install from conda
 ```
 conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 -c pytorch
 conda install torch_geometric -c conda-forge
 ```
 
-### Install from pip (TBD)
+### Install from pip
 ```
 pip install natsort
 pip install numpy
