@@ -20,19 +20,21 @@ Our Github repository consists of the following steps:
 
 ### Install from conda (TBD)
 ```
-conda create -n mica100 python=3.9.2        # Create a python virtual environment
-source activate mica100                     # Activate the virtual environment
-pip install MICA                            # Install MICA and its dependencies
+conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 -c pytorch
+conda install torch_geometric -c conda-forge
 ```
 
 ### Install from pip (TBD)
 ```
-conda create -n mica100 python=3.9.2        # Create a python virtual environment
-source activate mica100                     # Activate the virtual environment
-git clone https://github.com/jyyulab/MICA   # Clone the repo
-cd MICA                                     # Switch to the MICA root directory
-pip install .                               # Install MICA from source
-mica -h                                     # Check if mica works correctly
+pip install natsort
+pip install numpy
+pip install pandas
+pip install tqdm
+pip install scikit-learn
+pip install python-louvain
+pip install networkx
+pip install igraph
+pip install leidenalg
 ```
 
 
