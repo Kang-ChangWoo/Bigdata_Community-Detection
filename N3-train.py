@@ -21,7 +21,7 @@ def validate(net, test_loader):
     eval_loss = 0.0
 
     with torch.no_grad():
-        for i, (test_G, test_torch_G, test_community_label, peak_resolution) in enumerate(test_loader, 0):
+        for i, (data_name, test_G, test_torch_G, test_community_label, peak_resolution) in enumerate(test_loader, 0):
 
             out = net(test_G, test_torch_G)
 

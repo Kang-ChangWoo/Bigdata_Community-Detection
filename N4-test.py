@@ -155,11 +155,11 @@ def inference(args, model_path):
 
             # Scale
             min_value = nn.Parameter(torch.tensor([0.1])).to(args.device)
-            range_value = nn.Parameter(torch.tensor([80.0])).to(args.device)
+            range_value = nn.Parameter(torch.tensor([50.0])).to(args.device)
             out = min_value + range_value * out
 
             out_new = out.item()
-            predicted_community = detect_communities_leiden(test_G, resolution=0.1)#out_new
+            predicted_community = detect_communities_leiden(test_G, resolution=out_new) # 0.1 ~ 1.0
 
             true_communities = load_ground_truth(test_community_label)
             #original_nmi_score = calculate_nmi(true_communities, predicted_community)
@@ -169,7 +169,7 @@ def inference(args, model_path):
             nmi_score = calculate_nmi(true_communities, predicted_community)
 
             results.append((data_name, nmi_score, out_new))
-            print(f'NMI score for {data_name}: {nmi_score:.8f} {1:.8f}')#
+            print(f'NMI score for {data_name}: {nmi_score:.8f} {out_new:.8f}')#
             print(f'{test_community_label}')
             print('')
 
