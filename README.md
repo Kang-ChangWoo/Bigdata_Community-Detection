@@ -1,5 +1,5 @@
 # Dual Neural Network for Community Detection
-\* This repository is designated for storing and submitting term project code for UNIST lecture(2024090_AI51401).
+\: This repository is designated for storing and submitting term project code for UNIST lecture(2024090_AI51401).
 
 
 Our method enhances community detection performance by estimating optimal resolution parameters based on graph structures.
