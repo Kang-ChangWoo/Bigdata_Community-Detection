@@ -80,14 +80,14 @@ In this process, we can get each optimal parameters by measuring nmi scores iter
 
 For `real-world dataset` and `TC1 dataset`, we type below scripts respectively.
 ```
-python N1-organize_dataset.py                        \          # 
+python N2-precompute_peak.py                         \          # 
   --dataset_path 'path/to/your/`real-world_dataset`' \          # 
   --root_path 'path/to/your/`real-world_dataset`'    \          #
   --testset real                                                #
 
 ** : if our path is './root/proj/data/train/', dataset_path would be 'train' and root_path would be './root/proj/data/'
 
-python N1-organize_dataset.py                        \          # 
+python N2-precompute_peak.py                         \          # 
   --dataset_path 'path/to/your/`TC1-dataset`'        \          # 
   --root_path 'path/to/your/`TC1_dataset`'           \          #
   --testset TC1                                                 #
